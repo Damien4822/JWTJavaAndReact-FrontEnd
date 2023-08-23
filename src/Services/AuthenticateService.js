@@ -8,6 +8,7 @@ class AuthenticateService {
     }
 
     authenticate(user) {
+        localStorage.removeItem('Authorization');
         return axios.post(AUTH_API + "authenticate", user).then((res)=>{
             console.log(res.data.token);
             localStorage.setItem('Authorization', res.data.token);
