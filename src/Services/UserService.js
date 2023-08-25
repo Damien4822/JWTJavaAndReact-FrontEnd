@@ -4,8 +4,7 @@ const USER_API = "http://localhost:8080/users/";
 
 class UserService {
     getAll() {
-        const token = localStorage.getItem('Authorization');
-        console.log(token);
+        const token= localStorage.getItem("Authorization");
         return axios.get(USER_API + "index",{
             headers:{
                 'Authorization':'Bearer '+token,
@@ -39,7 +38,6 @@ class UserService {
 
     delete(id) {
         const token= localStorage.getItem("Authorization");
-        console.log(token);
         return axios.delete(USER_API + id,{
             headers:{
                 'Authorization':'Bearer '+token,
