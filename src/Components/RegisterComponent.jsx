@@ -12,6 +12,7 @@ class RegisterComponent extends Component {
         this.changeUsernameHandler = this.changeUsernameHandler.bind(this);
         this.changePasswordHandler = this.changePasswordHandler.bind(this);
         this.Register = this.Register.bind(this);
+        this.cancel= this.cancel.bind(this);
     }
 
     changeUsernameHandler = (e) => {
@@ -29,7 +30,10 @@ class RegisterComponent extends Component {
             this.props.navigate('/login');
         })
     }
-
+    cancel = (e) =>
+    {
+        this.props.navigate('/login');
+    }
     render() {
         return (
             <div>
@@ -50,7 +54,7 @@ class RegisterComponent extends Component {
                                                value={this.state.password} onChange={this.changePasswordHandler}/>
                                     </div>
                                     <button className="btn btn-success" onClick={this.Register}>Register</button>
-
+                                    <button className="btn btn-danger" onClick={this.cancel}>Cancel</button>
                                 </form>
                             </div>
                         </div>

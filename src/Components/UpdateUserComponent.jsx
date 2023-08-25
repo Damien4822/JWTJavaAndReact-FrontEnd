@@ -29,7 +29,7 @@ class UpdateUserComponent extends Component {
 
     updateUser = (event) => {
         let user;
-        //turn of checking changes in password and username for testing
+        //turn off checking changes in password and username for testing
         // want to check if the password has changed
         //if (this.state.password ===this.new.password)//no change in password
         //{

@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {withRouter} from "../withRouter";
 import UserService from "../Services/UserService";
-
+import {toast, ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 class ListUserComponent extends Component {
     constructor(props) {
         super(props);
@@ -11,14 +12,24 @@ class ListUserComponent extends Component {
         this.addUser = this.addUser.bind(this);
         this.updateUser = this.updateUser.bind(this);
         this.deleteUser = this.deleteUser.bind(this);
+        this.Logout=this.Logout.bind(this);
     }
-
-    componentDidMount() {
-        UserService.getAll().then(res => {
-            this.setState({users: res.data});
-        });
+    componentDidMount()
+    {
+        if(localStorage.getItem('Authorization')==null) {
+            this.props.navigate('/login');
+            window.location.reload();
+        }
+        else {
+            UserService.getAll().then(res => {
+                this.setState({users: res.data});
+            });
+        }
     }
-
+    Logout(){
+    localStorage.clear();
+    this.props.navigate('/login');
+    }
     updateUser(id) {
         this.props.navigate(`/update/${id}`);
     }
@@ -27,14 +38,23 @@ class ListUserComponent extends Component {
         this.props.navigate('/user/create');
     }
 
-    deleteUser(id) {
-        UserService.delete(id);
-        window.location.reload();
+    deleteUser(id,role) {
+        if(role === "ADMIN")
+        {
+            toast.warn("Cannot Delete ADMIN!",{position:'top-center'});
+        }
+        else {
+            UserService.delete(id);
+            window.location.reload();
+        }
     }
 
     render() {
         return (
             <div>
+                <div>
+                    <button className="btn btn-primary" onClick={this.Logout}>LogOut</button>
+                </div>
                 <h2 className="text-center">User List</h2>
                 <div>
                     <button className="btn btn-primary" onClick={this.addUser}>Add User</button>
@@ -61,9 +81,10 @@ class ListUserComponent extends Component {
                                             <button onClick={() => this.updateUser(user.id)}
                                                     className="btn btn-info">Update
                                             </button>
-                                            <button onClick={() => this.deleteUser(user.id)}
+                                            <button onClick={() => this.deleteUser(user.id,user.role)}
                                                     className="btn btn-danger">Delete
                                             </button>
+                                            <ToastContainer/>
                                         </td>
                                     </tr>
                             )

@@ -12,6 +12,7 @@ class LoginComponent extends Component {
         this.changeUsernameHandler = this.changeUsernameHandler.bind(this);
         this.changePasswordHandler = this.changePasswordHandler.bind(this);
         this.Login = this.Login.bind(this);
+        this.register=this.register.bind(this);
     }
 
     changeUsernameHandler = (e) => {
@@ -27,6 +28,9 @@ class LoginComponent extends Component {
         AuthenticateService.authenticate(user).then((res) => {
             this.props.navigate('/user/index');
         })
+    }
+    register = (e)=>{
+        this.props.navigate('/register');
     }
 
     render() {
@@ -48,8 +52,10 @@ class LoginComponent extends Component {
                                         <input placeholder="password" name="password" className="form-control"
                                                value={this.state.password} onChange={this.changePasswordHandler}/>
                                     </div>
-                                    <button className="btn btn-success" onClick={this.Login}>Login</button>
-
+                                    <div className="row-col-2  ">
+                                            <button className="btn btn-success" onClick={this.Login}>Login</button>
+                                            <button className="btn btn-success" onClick={this.register}>Register</button>
+                                    </div>
                                 </form>
                             </div>
                         </div>
